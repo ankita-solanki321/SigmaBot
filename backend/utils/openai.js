@@ -18,6 +18,7 @@ const getOpenAIAPIResponse = async (message) => {
     try {
         const response = await fetch("https://api.groq.com/openai/v1/chat/completions", options);
         const data = await response.json();
+        console.log("Groq response:", JSON.stringify(data)); // add this
 
         // ✅ Log full response to debug API errors
         if (!data.choices) {
