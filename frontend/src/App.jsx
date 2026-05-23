@@ -10,12 +10,16 @@ import {v1 as uuidv1} from "uuid";
 function App() {
   const [prompt, setPrompt] = useState("");
   const [reply, setReply] = useState(null);
-  const [currThreadId, setCurrentThreadId] = useState(uuidv1())
+  const [currThreadId, setCurrentThreadId] = useState(uuidv1());
+  const [prevChats, setPrevChats] = useState([]); // store all chats of current thread
+  const [newChat, setNewChat] = useState(true);// keep track of new chat when it is created
 
   const providerValues = {
     prompt , setPrompt,
     reply, setReply,
-    currThreadId, setCurrentThreadId
+    currThreadId, setCurrentThreadId,
+    newChat, setNewChat,
+    prevChats, setPrevChats
   };
 
 

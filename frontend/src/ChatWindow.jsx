@@ -172,16 +172,17 @@
 import "./ChatWindow.css";
 import Chat from "./Chat.jsx";
 import { MyContext } from "./MyContext.jsx";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { ScaleLoader } from "react-spinners";
 
 function ChatWindow() {
-   const { prompt, setPrompt, reply, setReply, currThreadId, setCurrentThreadId } = useContext(MyContext);
+   const { prompt, setPrompt, reply, setReply, currThreadId, setCurrentThreadId,prevChats, setPrevChats } = useContext(MyContext);
    const [loading, setLoading] = useState(false); // ✅ local state, no context needed
 
    const getReply = async () => {
         if (!prompt.trim()) return;
         setLoading(true);
+        // setPrompt("");
 
         const options = {
             method: "POST",
@@ -199,13 +200,29 @@ function ChatWindow() {
             const res = await response.json();
             console.log("reply:", res.reply);
             setReply(res.reply);
-            setPrompt("");
+            // setPrompt("");
         } catch (err) {
             console.log(err);
         } finally {
             setLoading(false);
         }
    };
+
+   //append new chat to previous chat
+   useEffect(() => {
+      if(prompt && reply){
+        setPrevChats(prevChats => 
+            [...prevChats,{
+                role: "user",
+                content: prompt
+            },{
+                role:"assistant",
+                content: reply
+            }]
+        )
+      }
+      setPrompt("");
+   }, [reply]);
 
    const handleKeyDown = (e) => {
         if (e.key === "Enter") getReply();
