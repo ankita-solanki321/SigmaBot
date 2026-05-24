@@ -177,7 +177,7 @@ import { ScaleLoader } from "react-spinners";
 
 function ChatWindow() {
    const { prompt, setPrompt, reply, setReply, currThreadId, setCurrentThreadId,prevChats, setPrevChats } = useContext(MyContext);
-   const [loading, setLoading] = useState(false); // ✅ local state, no context needed
+   const [loading, setLoading] = useState(false); 
 
    const getReply = async () => {
         if (!prompt.trim()) return;
