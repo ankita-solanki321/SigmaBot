@@ -16,13 +16,29 @@ function App() {
   const [allThreads, setAllThreads] = useState([]);
 
 
+
+   const getAllThreads = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/thread");
+      const res = await response.json();
+      const filteredData = res.map(thread => ({
+        threadId: thread.threadId,
+        title: thread.title
+      }));
+      setAllThreads(filteredData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const providerValues = {
     prompt , setPrompt,
     reply, setReply,
     currThreadId, setCurrentThreadId,
     newChat, setNewChat,
     prevChats, setPrevChats,
-     allThreads, setAllThreads
+     allThreads, setAllThreads,
+      getAllThreads 
   };
 
 
