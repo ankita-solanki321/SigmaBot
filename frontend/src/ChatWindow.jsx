@@ -280,6 +280,8 @@ function ChatWindow() {
   } = useContext(MyContext);
 
   const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); //drop down for user profile
+
 
   const getReply = async () => {
     if (!prompt.trim()) return;
@@ -316,6 +318,11 @@ function ChatWindow() {
     setPrompt("");
   }, [reply]);
 
+
+  const handleProfileClick = () => {
+    setIsOpen(!isOpen);
+  }
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter") getReply();
   };
@@ -324,10 +331,19 @@ function ChatWindow() {
     <div className="chatWindow">
       <div className="navbar">
         <span>SigmaBot <i className="fa-solid fa-angle-down"></i></span>
-        <div className="userIconDiv">
+        <div className="userIconDiv" onClick={handleProfileClick}>
           <span><i className="fa-solid fa-user"></i></span>
         </div>
       </div>
+
+      {
+        isOpen && 
+        <div className="dropDown">
+          <div className="dropDownItem"><i class="fa-solid fa-cloud-arrow-up"></i>Upgrade plan</div>
+          <div className="dropDownItem"><i class="fa-solid fa-gear"></i>Settings</div>
+          <div className="dropDownItem"><i class="fa-solid fa-arrow-right-from-bracket"></i>Log out</div>
+        </div>
+      }
 
       <Chat />
       <ScaleLoader color="#fff" loading={loading} />
