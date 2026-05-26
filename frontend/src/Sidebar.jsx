@@ -28,8 +28,23 @@ function Sidebar(){
     setReply(null);
     setCurrentThreadId(uuidv1());
     setPrevChats([]);
-   
    }
+
+   const changeThread = async(newThreadId) =>{
+    setCurrentThreadId(newThreadId);
+
+    try{
+    const response = await fetch(`http://localhost:8080/api/thread/${newThreadId}`);
+    const res = await response.json();
+    console.log(res);
+    setPrevChats(res);
+    setNewChat(false);
+    setReply(null);
+    }catch(err){
+      console.log(err);
+    }
+   }
+
     return(
         <section className="sidebar">
          {/* new chat button */}
@@ -44,7 +59,9 @@ function Sidebar(){
          <ul className="history">
             {
                allThreads?.map((thread, idx) => (
-               <li key={idx}>{thread.title}</li>
+               <li key={idx} 
+               onClick={(e) => changeThread(thread.threadId)}>
+               {thread.title}</li>
                ))
             }
          </ul>

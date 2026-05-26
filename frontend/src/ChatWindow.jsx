@@ -276,7 +276,7 @@ function ChatWindow() {
     reply, setReply,
     currThreadId,
     prevChats, setPrevChats,
-    setNewChat, getAllThreads  // ✅ getAllThreads destructure kiya
+    setNewChat, getAllThreads  
   } = useContext(MyContext);
 
   const [loading, setLoading] = useState(false);
@@ -284,7 +284,7 @@ function ChatWindow() {
   const getReply = async () => {
     if (!prompt.trim()) return;
     setLoading(true);
-    setNewChat(false); // ✅ "Start a New Chat" hatao jab message bhejo
+    setNewChat(false); 
 
     const options = {
       method: "POST",
